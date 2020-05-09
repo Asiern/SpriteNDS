@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +17,18 @@ namespace Sprite
         public Form1()
         {
             InitializeComponent();
+            WebClient webClient = new WebClient();
+            if (!webClient.DownloadString("https://pastebin.com/raw/7PZd8stk").Contains("1.0"))
+            {
+                if (MessageBox.Show("Update available", "SpriteUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start("https://github.com/Asiern/Sprite/releases");
+                }
+                else
+                {
+
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,11 +64,12 @@ namespace Sprite
             List<pixel> c4 = new List<pixel>();
 
             //LOAD PIXEL LIST
-            for (int i = 0; i < image.Width; i++)
+            for (int i = 0; i < image.Height; i++)
             {
-                for (int j = 0; j < image.Height; j++)
+                for (int j = 0; j < image.Width; j++)
                 {                   
-                    pixellist.Add(new pixel(i, j, image.GetPixel(i, j)));
+                    pixellist.Add(new pixel(j, i, image.GetPixel(j, i)));
+                    printpixel(new pixel(j, i, image.GetPixel(j, i)));
                 }
             }
 
@@ -63,27 +77,28 @@ namespace Sprite
             foreach (pixel p in pixellist)
             {
                 //C1
-                if (p.getX() < 9 && p.getY() < 9)
+                if (p.getX() < 8 && p.getY() < 8)
                 {
                     c1.Add(p);
                 }
                 //C2
-                if (p.getX() > 8 && p.getY() < 9)
+                if (p.getX() > 7 && p.getY() < 8)
                 {
                     c2.Add(p);
                 }
                 //C3
-                if (p.getX() < 9 && p.getY() > 8)
+                if (p.getX() < 8 && p.getY() > 7)
                 {
                     c3.Add(p);
                 }
                 //C4
-                if (p.getX() > 8 && p.getY() > 8)
+                if (p.getX() > 7 && p.getY() > 7)
                 {
                     c4.Add(p);
                 }
+                
             }
-
+           
             //CLEAN PIXEL LIST
             pixellist.Clear();
 
@@ -109,22 +124,14 @@ namespace Sprite
             }
 
 
-            List<Color> Pallete = new List<Color>();
-            foreach (pixel p in c1)
-            {
-                if (Pallete.Contains(p.getColor()))
-                {
-                    p.setPalleteindex(Pallete.IndexOf(p.getColor()));
-                }
-                else
-                {
-                    Pallete.Add(p.getColor());
-                    p.setPalleteindex(Pallete.IndexOf(p.getColor()));
-                }
-            }
-            printlist(c1);
+            
             
             return pixellist;
+        }
+
+        public void printpixel(pixel p)
+        {
+            Console.WriteLine(p.getX()+","+p.getY() + " ");
         }
 
         //PRINT LIST<PIXEL>
@@ -152,10 +159,21 @@ namespace Sprite
            
             try
             {
-                List<pixel> pixellist =  loadpixels();                
+                List<pixel> pixellist =  loadpixels();     
                 List<Color> Pallete = new List<Color>();
-                
-                
+                foreach (pixel p in pixellist)
+                {
+                    if (Pallete.Contains(p.getColor()))
+                    {
+                        p.setPalleteindex(Pallete.IndexOf(p.getColor()));
+                    }
+                    else
+                    {
+                        Pallete.Add(p.getColor());
+                        p.setPalleteindex(Pallete.IndexOf(p.getColor()));
+                    }
+                }
+                printlist(pixellist);
                 printPallete(Pallete);
 
             }
@@ -183,6 +201,7 @@ namespace Sprite
             {
                 Properties.Settings.Default.Path = openFileDialog.FileName.ToString();
                 Properties.Settings.Default.Save();
+                pictureBox1.Image = new Bitmap(Properties.Settings.Default.Path);
             }
         }
 
