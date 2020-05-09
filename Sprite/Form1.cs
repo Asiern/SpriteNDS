@@ -12,15 +12,15 @@ using System.Windows.Forms;
 
 namespace Sprite
 {
-    public partial class Form1 : Form
+    public partial class SpriteNDS : Form
     {
-        public Form1()
+        public SpriteNDS()
         {
             InitializeComponent();
             WebClient webClient = new WebClient();
             if (!webClient.DownloadString("https://pastebin.com/raw/7PZd8stk").Contains("1.0"))
             {
-                if (MessageBox.Show("Update available", "SpriteUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Update available", "SpriteNDSUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     System.Diagnostics.Process.Start("https://github.com/Asiern/Sprite/releases");
                 }
