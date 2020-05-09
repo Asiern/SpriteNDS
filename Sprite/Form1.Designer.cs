@@ -1,6 +1,6 @@
 ﻿namespace Sprite
 {
-    partial class Form1
+    partial class SpriteNDS
     {
         /// <summary>
         /// Required designer variable.
@@ -122,7 +122,7 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Image";
             // 
-            // Form1
+            // SpriteNDS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -138,8 +138,8 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "Form1";
-            this.Text = "Sprite";
+            this.Name = "SpriteNDS";
+            this.Text = "SpriteNDS";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
