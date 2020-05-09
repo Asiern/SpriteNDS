@@ -17,6 +17,8 @@ namespace Sprite
         public SpriteNDS()
         {
             InitializeComponent();
+
+            //UPDATER
             WebClient webClient = new WebClient();
             if (!webClient.DownloadString("https://pastebin.com/raw/7PZd8stk").Contains("1.0"))
             {
@@ -36,6 +38,7 @@ namespace Sprite
             Properties.Settings.Default.Path = null;
         }
 
+        //LOAD IMAGE 
         public Bitmap loadimage(String Path)
         {
             if (Path == null) 
@@ -53,6 +56,7 @@ namespace Sprite
             return image;
         }
 
+        //LOAD PIXELS
         public List<pixel> loadpixels()
         {
             Bitmap image = loadimage(Properties.Settings.Default.Path);
@@ -129,6 +133,7 @@ namespace Sprite
             return pixellist;
         }
 
+        //PRINT PIXEL COORDINATES
         public void printpixel(pixel p)
         {
             Console.WriteLine(p.getX()+","+p.getY() + " ");
@@ -143,6 +148,8 @@ namespace Sprite
             }
             textBox1.Text = s;
         }
+       
+        //PRINT PALLETE
         public void printPallete(List<Color> Pallete)
         {
             String s = "";
@@ -152,30 +159,37 @@ namespace Sprite
             }
             textBox2.Text = s.Replace("@", System.Environment.NewLine);
         }
+        
+        //LOAD PALLETE
+        public List<Color> loadPallete(List<pixel> pixellist)
+        {
+            List<Color> Pallete = new List<Color>();
+            foreach (pixel p in pixellist)
+            {
+                if (Pallete.Contains(p.getColor()))
+                {
+                    p.setPalleteindex(Pallete.IndexOf(p.getColor()));
+                }
+                else
+                {
+                    Pallete.Add(p.getColor());
+                    p.setPalleteindex(Pallete.IndexOf(p.getColor()));
+                }
+            }
+            return Pallete;
+        }
 
-
-        public void readimage()
+        //MAIN
+        public void main()
         {
            
             try
             {
                 List<pixel> pixellist =  loadpixels();     
                 List<Color> Pallete = new List<Color>();
-                foreach (pixel p in pixellist)
-                {
-                    if (Pallete.Contains(p.getColor()))
-                    {
-                        p.setPalleteindex(Pallete.IndexOf(p.getColor()));
-                    }
-                    else
-                    {
-                        Pallete.Add(p.getColor());
-                        p.setPalleteindex(Pallete.IndexOf(p.getColor()));
-                    }
-                }
+                Pallete = loadPallete(pixellist);
                 printlist(pixellist);
                 printPallete(Pallete);
-
             }
             catch(FileNotSupported ex)
             {
@@ -193,7 +207,7 @@ namespace Sprite
         }
 
 
-        //BUTTONS
+        //LOAD BUTTON
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -205,14 +219,12 @@ namespace Sprite
             }
         }
 
+        //RUN BUTTON
         private void button2_Click(object sender, EventArgs e)
         {
-            readimage();
+            main();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
