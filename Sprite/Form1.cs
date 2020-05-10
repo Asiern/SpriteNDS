@@ -21,13 +21,12 @@ namespace Sprite
             InitializeComponent();
 
             //UPDATER
-            WebClient webClient = new WebClient();
-            
+            WebClient webClient = new WebClient();            
             if (!webClient.DownloadString("https://pastebin.com/raw/7PZd8stk").Contains("1.0"))
             {
                 if (MessageBox.Show("Update available", "SpriteNDSUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    System.Diagnostics.Process.Start("https://github.com/Asiern/Sprite/releases");
+                    System.Diagnostics.Process.Start("https://github.com/Asiern/SpriteNDS/releases");
                 }
                 else
                 {
@@ -44,7 +43,7 @@ namespace Sprite
 
             // Configure color schema
             materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.DeepPurple200, Primary.DeepPurple300,
+                Primary.Teal600, Primary.Teal700,
                 Primary.DeepPurple300, Accent.DeepPurple200,
                 TextShade.WHITE
                 );
@@ -67,6 +66,7 @@ namespace Sprite
 
             if ((image.Width != 16 || image.Height != 16) && (image.Width != 32 || image.Height != 32) )
             {
+                Properties.Settings.Default.Path = null;
                 throw new FileNotSupported();
             }
             Console.WriteLine(image.Size);
@@ -143,8 +143,6 @@ namespace Sprite
             {
                 pixellist.Add(p);
             }
-
-
             
             
             return pixellist;
@@ -288,56 +286,48 @@ namespace Sprite
             foreach (pixel p in c1)
             {
                 pixellist.Add(p);
-                printpixel(p);
             }
             //LOAD C2
             Console.WriteLine("C2");
             foreach (pixel p in c2)
             {
                 pixellist.Add(p);
-                printpixel(p);
             }
             //LOAD C3
             Console.WriteLine("C3");
             foreach (pixel p in c3)
             {
                 pixellist.Add(p);
-                printpixel(p);
             }
             //LOAD C4
             Console.WriteLine("C4");
             foreach (pixel p in c4)
             {
                 pixellist.Add(p);
-                printpixel(p);
             }
             //LOAD C5
             Console.WriteLine("C5");
             foreach (pixel p in c5)
             {
                 pixellist.Add(p);
-                printpixel(p);
             }
             //LOAD C6
             Console.WriteLine("C6");
             foreach (pixel p in c6)
             {
                 pixellist.Add(p);
-                printpixel(p);
             }
             //LOAD C7
             Console.WriteLine("C7");
             foreach (pixel p in c7)
             {
                 pixellist.Add(p);
-                printpixel(p);
             }
             //LOAD C8
             Console.WriteLine("C8");
             foreach (pixel p in c8)
             {
                 pixellist.Add(p);
-                printpixel(p);
             }
             //LOAD C9
             foreach (pixel p in c9)
@@ -380,7 +370,7 @@ namespace Sprite
             {
                 pixellist.Add(p);
             }
-            Console.WriteLine(pixellist.Capacity);
+
             return pixellist;
         }
 
@@ -456,7 +446,7 @@ namespace Sprite
             }
             catch(ImageNotSelected ex)
             {
-                MessageBox.Show("Plesae select an image");
+                MessageBox.Show("Please select an image");
             }
             catch(Exception ex)
             {
@@ -466,7 +456,7 @@ namespace Sprite
         }
 
 
-
+        //IMPORT
         private void materialFlatButton1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -478,9 +468,15 @@ namespace Sprite
             }
         }
 
+        //GENERATE
         private void materialRaisedButton1_Click(object sender, EventArgs e)
         {
             main();
+        }
+
+        private void materialFlatButton2_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Asiern/SpriteNDS");
         }
     }
 }
