@@ -117,6 +117,7 @@
             // 
             this.materialFlatButton1.AutoSize = true;
             this.materialFlatButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButton1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.materialFlatButton1.Depth = 0;
             this.materialFlatButton1.Icon = null;
             this.materialFlatButton1.Location = new System.Drawing.Point(569, 234);
@@ -127,7 +128,7 @@
             this.materialFlatButton1.Size = new System.Drawing.Size(72, 36);
             this.materialFlatButton1.TabIndex = 12;
             this.materialFlatButton1.Text = "IMPORT";
-            this.materialFlatButton1.UseVisualStyleBackColor = true;
+            this.materialFlatButton1.UseVisualStyleBackColor = false;
             this.materialFlatButton1.Click += new System.EventHandler(this.materialFlatButton1_Click);
             // 
             // materialRaisedButton1
