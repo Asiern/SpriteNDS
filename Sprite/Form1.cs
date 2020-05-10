@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MaterialSkin;
+using MaterialSkin.Controls;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,29 +14,40 @@ using System.Windows.Forms;
 
 namespace Sprite
 {
-    public partial class SpriteNDS : Form
+    public partial class SpriteNDS : MaterialForm
     {
         public SpriteNDS()
         {
             InitializeComponent();
-            /*
+
             //UPDATER
             WebClient webClient = new WebClient();
-            try
+            
+            if (!webClient.DownloadString("https://pastebin.com/raw/7PZd8stk").Contains("1.0"))
             {
-                if (!webClient.DownloadString("https://pastebin.com/raw/7PZd8stk").Contains("1.0"))
+                if (MessageBox.Show("Update available", "SpriteNDSUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    if (MessageBox.Show("Update available", "SpriteNDSUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        System.Diagnostics.Process.Start("https://github.com/Asiern/Sprite/releases");
-                    }
-                    else
-                    {
+                    System.Diagnostics.Process.Start("https://github.com/Asiern/Sprite/releases");
+                }
+                else
+                {
 
-                    }
                 }
             }
-            finally { }*/
+            
+
+
+            //MATERIAL SKIN
+            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+
+            // Configure color schema
+            materialSkinManager.ColorScheme = new ColorScheme(
+                Primary.DeepPurple200, Primary.DeepPurple300,
+                Primary.DeepPurple300, Accent.DeepPurple200,
+                TextShade.WHITE
+                );
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -194,6 +207,8 @@ namespace Sprite
                     c4.Add(p);
                 }
 
+
+
                 //C5
                 if (p.getX() < 8 && p.getY() > 7 && p.getY() < 16)
                 {
@@ -214,6 +229,7 @@ namespace Sprite
                 {
                     c8.Add(p);
                 }
+
 
 
                 //C9
@@ -364,7 +380,7 @@ namespace Sprite
             {
                 pixellist.Add(p);
             }
-
+            Console.WriteLine(pixellist.Capacity);
             return pixellist;
         }
 
@@ -420,7 +436,7 @@ namespace Sprite
             try
             {
                 List<pixel> pixellist;
-                if (loadimage(Properties.Settings.Default.Path).Width == 16)
+                if (loadimage(Properties.Settings.Default.Path).Width != 16)
                 {
                     pixellist = loadpixels32();
                 }
@@ -436,11 +452,11 @@ namespace Sprite
             }
             catch(FileNotSupported ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Image must be 16x16 or 32x32");
             }
             catch(ImageNotSelected ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Plesae select an image");
             }
             catch(Exception ex)
             {
@@ -450,8 +466,8 @@ namespace Sprite
         }
 
 
-        //LOAD BUTTON
-        private void button1_Click(object sender, EventArgs e)
+
+        private void materialFlatButton1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -462,12 +478,9 @@ namespace Sprite
             }
         }
 
-        //RUN BUTTON
-        private void button2_Click(object sender, EventArgs e)
+        private void materialRaisedButton1_Click(object sender, EventArgs e)
         {
             main();
         }
-
-        
     }
 }
