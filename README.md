@@ -14,13 +14,20 @@ Convert sprites to NDS matrix
 | .jpg           | Yes     | Yes   | Yes   |
 | .png           | Yes     | Yes   | Yes   |
 | .bmp           | Yes     | Yes   | Yes   |
+| .gif           | Yes     |   ?   |   ?   |
+| .mpo           | No      |   -   |   -   |
+| .jpf           | No      |   -   |   -   |
+| .iff           | No      |   -   |   -   |
+| .dcm           | No      |   -   |   -   |
+| .psd           | No      |   -   |   -   |
+| .jps           | No      |   -   |   -   |
 
 
 ---
 
 #### Known issues
 
-- 32x32 wide range collor palletes might cause issues
+- Wide range collor palletes might cause issues
 
 ---
 
