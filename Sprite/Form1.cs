@@ -478,5 +478,10 @@ namespace Sprite
         {
             System.Diagnostics.Process.Start("https://github.com/Asiern/SpriteNDS");
         }
+
+        private void materialLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

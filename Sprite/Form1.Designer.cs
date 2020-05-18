@@ -84,9 +84,10 @@
             this.materialLabel1.Location = new System.Drawing.Point(26, 298);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(96, 19);
+            this.materialLabel1.Size = new System.Drawing.Size(97, 19);
             this.materialLabel1.TabIndex = 9;
-            this.materialLabel1.Text = "Color Pallete";
+            this.materialLabel1.Text = "Color Palette";
+            this.materialLabel1.Click += new System.EventHandler(this.materialLabel1_Click);
             // 
             // materialLabel2
             // 
