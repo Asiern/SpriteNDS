@@ -16,7 +16,7 @@ As shown in the image, this tools has 3 buttons "IMPORT", "GENERATE" and "ABOUT"
 
 - To generate the Sprite Matrix and the Color Palette, press GENERATE and both Sprite Matrix and Collor Palette will load.
 
-- To finish up, copy both Sprite Matrix and Collor Palette contents into 'soucer\sprites.c'
+- To finish up, copy both Sprite Matrix and Collor Palette contents into 'source\sprites.c'
 
 ---
 
