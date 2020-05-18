@@ -8,6 +8,18 @@ Convert sprites to NDS matrix
 
 ---
 
+#### Use Guide
+
+As shown in the image, this tools has 3 buttons "IMPORT", "GENERATE" and "ABOUT".
+
+- By clicking on the "IMPORT" button you can import an image of the formats shown at [supported files](https://github.com/Asiern/SpriteNDS#supported-files). After importing an image a preview will load on the top right corner.
+
+- To generate the Sprite Matrix and the Color Palette, press GENERATE and both Sprite Matrix and Collor Palette will load.
+
+- To finish up, copy both Sprite Matrix and Collor Palette contents into 'soucer\sprites.c'
+
+---
+
 #### Supported files
 | File extension | Support | 16x16 | 32x32 |
 |----------------|---------|-------|-------|
@@ -27,7 +39,7 @@ Convert sprites to NDS matrix
 
 #### Known issues
 
-Wide range collor palletes might cause issues due to color repetition. This happens when converting the color from RGB 24 bit to RGB 15 bit
+Wide range collor palettes might cause issues due to color repetition. This happens when converting the color from RGB 24 bit to RGB 15 bit
 
 For this reason, it is recommended to use images composed by as few colors as posible.
 To achieve this, it is convenient to use an image editor as Adobe Photoshop, Gimp...
