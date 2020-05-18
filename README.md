@@ -12,7 +12,7 @@ Convert sprites to NDS matrix
 
 As shown in the image, this tools has 3 buttons "IMPORT", "GENERATE" and "ABOUT".
 
-- By clicking on the "IMPORT" button you can import an image of the formats shown at [supported files](https://github.com/Asiern/SpriteNDS#supported-files). After importing an image a preview will load on the top right corner.
+- By clicking on the "IMPORT" button you can import an [image](https://github.com/Asiern/SpriteNDS#sprite-converter-for-nds) of the formats shown at [supported files](https://github.com/Asiern/SpriteNDS#supported-files). After importing an image a preview will load on the top right corner.
 
 - To generate the Sprite Matrix and the Color Palette, press GENERATE and both Sprite Matrix and Collor Palette will load.
 
