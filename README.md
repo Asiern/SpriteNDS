@@ -27,11 +27,14 @@ Convert sprites to NDS matrix
 
 #### Known issues
 
-- Wide range collor palletes might cause issues
+Wide range collor palletes might cause issues due to color repetition. This happens when converting the color from RGB 24 bit to RGB 15 bit
+
+For this reason, it is recommended to use images composed by as few colors as posible.
+To achieve this, it is convenient to use an image editor as Adobe Photoshop, Gimp...
 
 ---
 
-### Material Skin
+#### Material Skin
 
 Using [MaterialSkin](https://github.com/IgnaceMaes/MaterialSkin) by Ignace Maes
 
