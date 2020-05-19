@@ -22,7 +22,7 @@ namespace Sprite
 
             //UPDATER
             WebClient webClient = new WebClient();            
-            if (!webClient.DownloadString("https://pastebin.com/raw/7PZd8stk").Contains("1.1"))
+            if (!webClient.DownloadString("https://pastebin.com/raw/7PZd8stk").Contains("1.2"))
             {
                 if (MessageBox.Show("Update available", "SpriteNDSUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
