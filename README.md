@@ -21,6 +21,7 @@ As shown in the image, this tools has 3 buttons "IMPORT", "GENERATE" and "ABOUT"
 ---
 
 #### Supported files
+
 | File extension | Support | 16x16 | 32x32 |
 |----------------|---------|-------|-------|
 | .jpg           | Yes     | Yes   | Yes   |
@@ -34,6 +35,13 @@ As shown in the image, this tools has 3 buttons "IMPORT", "GENERATE" and "ABOUT"
 | .psd           | No      |   -   |   -   |
 | .jps           | No      |   -   |   -   |
 
+
+---
+
+#### Exceptions
+
+- ImageNotSelected
+- FileNotSupported
 
 ---
 
