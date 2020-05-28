@@ -54,6 +54,13 @@ To achieve this, it is convenient to use an image editor as Adobe Photoshop, Gim
 
 ---
 
+#### Upgrades to be done
+
+- Fix color conversion from RGB 24 bit to RGB 15 bit. Number rounding creates repeated colors.
+- An option to select the transparent color SPRITE_PALETTE[0]
+
+---
+
 #### Material Skin
 
 Using [MaterialSkin](https://github.com/IgnaceMaes/MaterialSkin) by Ignace Maes
