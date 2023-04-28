@@ -1,5 +1,6 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Runtime.Remoting.Lifetime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,25 +19,12 @@ namespace Sprite
 {
     public partial class SpriteNDS : MaterialForm
     {
+        private static string ReleaseVersion = "1.3";
+        private static string LatestReleaseVersion;
         public SpriteNDS()
         {
             InitializeComponent();
-
-            //UPDATER
-            WebClient webClient = new WebClient();            
-            if (!webClient.DownloadString("https://pastebin.com/raw/7PZd8stk").Contains("1.2"))
-            {
-                if (MessageBox.Show("Update available", "SpriteNDSUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    System.Diagnostics.Process.Start("https://github.com/Asiern/SpriteNDS/releases");
-                }
-                else
-                {
-
-                }
-            }
-            
-
+            GetLatestReleaseVersion();
 
             //MATERIAL SKIN
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
@@ -49,6 +39,121 @@ namespace Sprite
                 );
         }
 
+        internal class Asset
+        {
+            public string url { get; set; }
+            public int id { get; set; }
+            public string node_id { get; set; }
+            public string name { get; set; }
+            public object label { get; set; }
+            public Uploader uploader { get; set; }
+            public string content_type { get; set; }
+            public string state { get; set; }
+            public int size { get; set; }
+            public int download_count { get; set; }
+            public DateTime created_at { get; set; }
+            public DateTime updated_at { get; set; }
+            public string browser_download_url { get; set; }
+        }
+        internal class Author
+        {
+            public string login { get; set; }
+            public int id { get; set; }
+            public string node_id { get; set; }
+            public string avatar_url { get; set; }
+            public string gravatar_id { get; set; }
+            public string url { get; set; }
+            public string html_url { get; set; }
+            public string followers_url { get; set; }
+            public string following_url { get; set; }
+            public string gists_url { get; set; }
+            public string starred_url { get; set; }
+            public string subscriptions_url { get; set; }
+            public string organizations_url { get; set; }
+            public string repos_url { get; set; }
+            public string events_url { get; set; }
+            public string received_events_url { get; set; }
+            public string type { get; set; }
+            public bool site_admin { get; set; }
+        }
+        internal class Root
+        {
+            public string url { get; set; }
+            public string assets_url { get; set; }
+            public string upload_url { get; set; }
+            public string html_url { get; set; }
+            public int id { get; set; }
+            public Author author { get; set; }
+            public string node_id { get; set; }
+            public string tag_name { get; set; }
+            public string target_commitish { get; set; }
+            public string name { get; set; }
+            public bool draft { get; set; }
+            public bool prerelease { get; set; }
+            public DateTime created_at { get; set; }
+            public DateTime published_at { get; set; }
+            public List<Asset> assets { get; set; }
+            public string tarball_url { get; set; }
+            public string zipball_url { get; set; }
+            public string body { get; set; }
+        }
+        internal class Uploader
+        {
+            public string login { get; set; }
+            public int id { get; set; }
+            public string node_id { get; set; }
+            public string avatar_url { get; set; }
+            public string gravatar_id { get; set; }
+            public string url { get; set; }
+            public string html_url { get; set; }
+            public string followers_url { get; set; }
+            public string following_url { get; set; }
+            public string gists_url { get; set; }
+            public string starred_url { get; set; }
+            public string subscriptions_url { get; set; }
+            public string organizations_url { get; set; }
+            public string repos_url { get; set; }
+            public string events_url { get; set; }
+            public string received_events_url { get; set; }
+            public string type { get; set; }
+            public bool site_admin { get; set; }
+        }
+
+
+
+        private static async void GetLatestReleaseVersion()
+        {
+            string owner = "Asiern";
+            string repo = "SpriteNDS";
+            string apiUrl = $"https://api.github.com/repos/{owner}/{repo}/releases/latest";
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+            client.DefaultRequestHeaders.Add("User-Agent", repo);
+
+            var response = await client.GetAsync(apiUrl);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Root release = JsonConvert.DeserializeObject<Root>(responseBody);
+                LatestReleaseVersion = release.tag_name;
+            }
+            else
+            {
+                LatestReleaseVersion = ReleaseVersion;
+            }
+
+            _ = new WebClient();
+
+            if (!ReleaseVersion.Equals(LatestReleaseVersion))
+            {
+                if (MessageBox.Show("Update available", "SpriteNDSUpdater", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start("https://github.com/Asiern/SpriteNDS/releases");
+                }
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             Properties.Settings.Default.Path = null;
@@ -57,14 +162,14 @@ namespace Sprite
         //LOAD IMAGE 
         public Bitmap loadimage(String Path)
         {
-            if (Path == null) 
+            if (Path == null)
             {
                 throw new ImageNotSelected();
             }
 
             Bitmap image = new Bitmap(Path, true);
 
-            if ((image.Width != 16 || image.Height != 16) && (image.Width != 32 || image.Height != 32) )
+            if ((image.Width != 16 || image.Height != 16) && (image.Width != 32 || image.Height != 32))
             {
                 Properties.Settings.Default.Path = null;
                 throw new FileNotSupported();
@@ -77,7 +182,7 @@ namespace Sprite
         public List<pixel> loadpixels16()
         {
             Bitmap image = loadimage(Properties.Settings.Default.Path);
-            
+
             List<pixel> pixellist = new List<pixel>();
             List<pixel> c1 = new List<pixel>();
             List<pixel> c2 = new List<pixel>();
@@ -88,7 +193,7 @@ namespace Sprite
             for (int i = 0; i < image.Height; i++)
             {
                 for (int j = 0; j < image.Width; j++)
-                {                   
+                {
                     pixellist.Add(new pixel(j, i, image.GetPixel(j, i)));
                     printpixel(new pixel(j, i, image.GetPixel(j, i)));
                 }
@@ -117,14 +222,14 @@ namespace Sprite
                 {
                     c4.Add(p);
                 }
-                
+
             }
-           
+
             //CLEAN PIXEL LIST
             pixellist.Clear();
 
             //LOAD C1
-            foreach(pixel p in c1)
+            foreach (pixel p in c1)
             {
                 pixellist.Add(p);
             }
@@ -143,8 +248,8 @@ namespace Sprite
             {
                 pixellist.Add(p);
             }
-            
-            
+
+
             return pixellist;
         }
 
@@ -177,7 +282,7 @@ namespace Sprite
                 for (int j = 0; j < image.Width; j++)
                 {
                     pixellist.Add(new pixel(j, i, image.GetPixel(j, i)));
-                    
+
                 }
             }
 
@@ -200,7 +305,7 @@ namespace Sprite
                     c3.Add(p);
                 }
                 //C4
-                if (p.getX() > 23 && p.getX() < 32 && p.getY() < 8 )
+                if (p.getX() > 23 && p.getX() < 32 && p.getY() < 8)
                 {
                     c4.Add(p);
                 }
@@ -377,30 +482,31 @@ namespace Sprite
         //PRINT PIXEL COORDINATES
         public void printpixel(pixel p)
         {
-            Console.WriteLine(p.getX()+","+p.getY() + " ");
+            Console.WriteLine(p.getX() + "," + p.getY() + " ");
         }
 
         //PRINT LIST<PIXEL>
         public void printlist(List<pixel> l)
         {
-            String s ="";
-            foreach(pixel p in l){
+            String s = "";
+            foreach (pixel p in l)
+            {
                 s += p.getPalleteindex().ToString() + ",";
             }
             textBox1.Text = s;
         }
-       
+
         //PRINT PALLETE
         public void printPallete(List<Color> Pallete)
         {
             String s = "";
             foreach (Color c in Pallete)
             {
-                s += "SPRITE_PALETTE["+ Pallete.IndexOf(c).ToString()+ "] = RGB15("+(c.R*31/255).ToString()+","+(c.G * 31 / 255).ToString()+","+(c.B * 31 / 255).ToString()+");@";
+                s += "SPRITE_PALETTE[" + Pallete.IndexOf(c).ToString() + "] = RGB15(" + (c.R * 31 / 255).ToString() + "," + (c.G * 31 / 255).ToString() + "," + (c.B * 31 / 255).ToString() + ");@";
             }
             textBox2.Text = s.Replace("@", System.Environment.NewLine);
         }
-        
+
         //LOAD PALLETE
         public List<Color> loadPallete(List<pixel> pixellist)
         {
@@ -421,7 +527,7 @@ namespace Sprite
         }
 
         //MAIN
-        public void main()
+        public async void main()
         {
             try
             {
@@ -434,21 +540,21 @@ namespace Sprite
                 {
                     pixellist = loadpixels16();
                 }
-                
+
                 List<Color> Pallete = new List<Color>();
                 Pallete = loadPallete(pixellist);
                 printlist(pixellist);
                 printPallete(Pallete);
             }
-            catch(FileNotSupported ex)
+            catch (FileNotSupported ex)
             {
                 MessageBox.Show("Image must be 16x16 or 32x32");
             }
-            catch(ImageNotSelected ex)
+            catch (ImageNotSelected ex)
             {
                 MessageBox.Show("Please select an image");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
